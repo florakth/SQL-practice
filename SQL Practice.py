@@ -43,6 +43,11 @@ duplicates.
 SELECT DISTINCT CITY FROM STATION WHERE
 CITY NOT REGEXP '^[aeiou]' OR CITY NOT REGEXP '[aeiou]$' ;
 
+5.1 Query the list of CITY names from STATION that do not start with vowels
+and do not end with vowels. Your result cannot contain duplicates.
+SELECT DISTINCT CITY FROM STATION 
+WHERE CITY NOT RLIKE '^[aeiouAEIOU]' AND CITY NOT RLIKE '[aeiouAEIOU]$';
+
 6. Write a query to output the start and end dates of projects
 listed by the number of days it took to complete the project in ascending order.
 If there is more than one project that have the same number of completion days,
@@ -69,3 +74,59 @@ SELECT s.Name FROM
  JOIN Packages fp ON fp.ID = S.FID
 WHERE S.Salary < fp.Salary
 ORDER BY fp.Salary;
+
+
+8. Write a query to output all such symmetric pairs in ascending order
+by the value of X.
+
+SELECT f1.x AS x, 
+       f1.y AS y 
+FROM   functions f1, 
+       functions f2 
+WHERE  f1.x = f2.y 
+       AND f1.y = f2.x 
+       AND f1.x < f1.y
+UNION 
+SELECT x, 
+       y 
+FROM   functions 
+WHERE  x = y 
+GROUP  BY x, 
+          y 
+HAVING Count(x) > 1 
+ORDER  BY x ASC
+
+9.Given the CITY and COUNTRY tables, query the sum of the populations
+of all cities where the CONTINENT is 'Asia'.Given the CITY and COUNTRY tables,
+query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+
+SELECT SUM(C.POPULATION) FROM CITY AS C
+JOIN COUNTRY AS CO ON CO.CODE = C.COUNTRYCODE
+WHERE CO.CONTINENT = 'Asia';
+
+10. Given the CITY and COUNTRY tables, query the names of all the continents
+(COUNTRY.Continent) and their respective average city populations
+(CITY.Population) rounded down to the nearest integer.
+
+SELECT CO.CONTINENT, FLOOR(AVG(C.POPULATION)) FROM COUNTRY AS CO
+JOIN CITY AS C ON C.COUNTRYCODE = CO.CODE
+GROUP BY CO.CONTINENT 
+
+11. Ketty gives Eve a task to generate a report containing three columns:
+    Name, Grade and Mark. Ketty doesn not want the NAMES of those students
+    who received a grade lower than 8. The report must be in descending order
+    by grade -- i.e. higher grades are entered first. If there is more than one
+    student with the same grade (8-10) assigned to them, order those particular
+    students by their name alphabetically. Finally, if the grade is lower than
+    8, use "NULL" as their name and list them by their grades in descending
+    order. If there is more than one student with the same grade (1-7) assigned
+    to them, order those particular students by their marks in ascending order.
+
+SELECT IF(G.Grade<8, NULL, S.Name), G.Grade, S.Marks FROM Students AS S
+JOIN Grades AS G ON S.Marks BETWEEN G.Min_Mark AND G.Max_Mark
+ORDER BY G.Grade DESC, S.Name, S.Marks;
+
+12.Write a query calculating the amount of error (i.e.:actual-miscalculated
+average monthlysalaries), and round it up to the next integer.
+
+SELECT CEILING(AVG(Salary)-AVG(REPLACE(SALARY,'0',''))) FROM EMPLOYEES
