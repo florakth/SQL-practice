@@ -131,58 +131,8 @@ average monthlysalaries), and round it up to the next integer.
 
 SELECT CEILING(AVG(Salary)-AVG(REPLACE(SALARY,'0',''))) FROM EMPLOYEES
 
-13.We define an employee's total earnings to be their monthly  worked, and the maximum
- total earnings to be the maximum total earnings for any employee in the Employee table. 
-Write a query to find the maximum total earnings for all employees as well as the total 
-number of employees who have maximum total earnings. Then print these values as  space-
-separated integers.
-
-SELECT (months*salary) AS earnings, COUNT(*)
-FROM Employee
-GROUP BY earnings
-ORDER BY earnings DESC
-LIMIT 1;
-
-14 Write a query identifying the type of each record in the TRIANGLES table using its 
-three side lengths. Output one of the following statements for each record in the table:
-Equilateral: It's a triangle with  sides of equal length.
-Isosceles: It's a triangle with  sides of equal length.
-Scalene: It's a triangle with  sides of differing lengths.
-Not A Triangle: The given values of A, B, and C don't form a triangle.
-
-SELECT 
-CASE 
-WHEN A+B <= C OR B+C <= A OR C+A <= B THEN 'Not A Triangle'
-WHEN A=B AND B=C THEN 'Equilateral'
-WHEN A=B OR B=C OR C=A THEN 'Isosceles'
-ELSE 'Scalene' 
-END
-FROM TRIANGLES
-
-15. lists the employees that have registered more than 10 orders
-
-SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
-FROM (Orders
-INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
-GROUP BY LastName
-HAVING COUNT(Orders.OrderID) > 10;
-
-16.lists if the employees "Davolio" or "Fuller" have registered more than 25 orders
-SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
-FROM Orders
-INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
-WHERE LastName = 'Davolio' OR LastName = 'Fuller'
-GROUP BY LastName
-HAVING COUNT(Orders.OrderID) > 25;
-
-17. Copies data from more than one table into a new table
-
-SELECT Customers.CustomerName, Orders.OrderID
-INTO CustomersOrderBackup2017
-FROM Customers
-LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;13.We define an
-employee's total earnings to be their monthly  worked, and the maximum total
-earnings to be the maximum total earnings for any employee in the Employee table. 
+13.We define an employee's total earnings to be their monthly  worked, and
+the maximum totalearnings to be the maximum total earnings for any employee in the Employee table. 
 Write a query to find the maximum total earnings for all employees as well as the total 
 number of employees who have maximum total earnings. Then print these values as  space-
 separated integers.
