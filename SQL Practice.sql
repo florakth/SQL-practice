@@ -129,8 +129,11 @@ average monthly salaries), and round it up to the next integer.
 SELECT CEILING(AVG(Salary)-AVG(REPLACE(SALARY,'0',''))) FROM EMPLOYEES
 
 
-
-13.We define an employee's total earnings to be their monthly  worked, and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. Then print these values as  space-separated integers.
+13.We define an employee's total earnings to be their monthly  worked, and the maximum
+ total earnings to be the maximum total earnings for any employee in the Employee table. 
+Write a query to find the maximum total earnings for all employees as well as the total 
+number of employees who have maximum total earnings. Then print these values as  space-
+separated integers.
 
 SELECT (months*salary) AS earnings, COUNT(*)
 FROM Employee
@@ -138,7 +141,8 @@ GROUP BY earnings
 ORDER BY earnings DESC
 LIMIT 1;
 
-14 Write a query identifying the type of each record in the TRIANGLES table using its three side lengths. Output one of the following statements for each record in the table:
+14 Write a query identifying the type of each record in the TRIANGLES table using its 
+three side lengths. Output one of the following statements for each record in the table:
 Equilateral: It's a triangle with  sides of equal length.
 Isosceles: It's a triangle with  sides of equal length.
 Scalene: It's a triangle with  sides of differing lengths.
